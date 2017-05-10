@@ -3,7 +3,10 @@
 
 from __future__ import unicode_literals, print_function
 
-import Cookie
+try:
+    from http.cookies import SimpleCookie
+except ImportError:
+    from Cookie import SimpleCookie
 
 import pyquery
 
@@ -27,7 +30,7 @@ class RoboBrowserQuery(RoboBrowser):
         recommend: from django.utils.encoding import smart_str
                    set_cookie_at_next_request(smart_str(cookie_text))
         """
-        self.simple_cookie = Cookie.SimpleCookie()
+        self.simple_cookie = SimpleCookie()
         self.simple_cookie.load(cookie_text)
 
     def cookie_as_dict(self):
