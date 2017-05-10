@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 from setuptools import setup
-from robobrowserquery import __author__, __version__, __license__
 
 setup(
     name='robobrowserquery',
-    version=__version__,
+    version='0.2',
     description='PyQuery on RoboBrowser',
-    license=__license__,
-    author=__author__,
+    license='BSD',
+    author='ytyng',
     author_email='ytyng@live.jp',
     url='https://github.com/ytyng/robobrowserquery.git',
     keywords='RoboBrowser, PyQuery, Browser, Scraping',

@@ -54,3 +54,6 @@ Podfile.lock
 # if required
 # data/*
 # config/*
+
+dist/
+*.egg-info
