@@ -5,6 +5,9 @@ PyQuery on RoboBrowser
 
 RoboBrowser: https://github.com/jmcarp/robobrowser
 
+recommend: pip install git+https://github.com/M157q/robobrowser/
+
+
 PyQuery: https://pythonhosted.org/pyquery/
 
 
