@@ -60,12 +60,29 @@ class RoboBrowserQuery(RoboBrowser):
         """
         return list(iter(self.session.cookies))
 
+    def save_cookies_to_file(self, file_path):
+        """
+        Save pickled cookies to file
+        """
+        import pickle
+        with open(file_path, 'wb') as fp:
+            pickle.dump(self.get_cookies(), fp)
+
     def set_cookies(self, cookies):
         """
         From serialized, example django cache
         """
         for cookie in cookies:
             self.session.cookies.set_cookie(cookie)
+
+    def load_cookies_from_file(self, file_path):
+        """
+        Load unpickled cookies to file
+        """
+        import pickle
+        with open(file_path, 'rb') as fp:
+            cookies = pickle.load(fp)
+            self.set_cookies(cookies)
 
     def get_cookies_as_dicts(self):
         """
