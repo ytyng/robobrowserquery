@@ -7,6 +7,8 @@ menu = [
      ""),
     ('flake8',
      "flake8 ."),
+    ('test',
+     "./tests.py"),
     ('upload pypi',
      "./setup.py sdist; twine upload dist/*"),
 ]
