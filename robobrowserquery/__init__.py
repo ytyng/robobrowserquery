@@ -16,6 +16,10 @@ from robobrowser import RoboBrowser
 class RoboBrowserQuery(RoboBrowser):
     simple_cookie = None
 
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('parser', 'lxml')
+        super(RoboBrowserQuery, self).__init__(*args, **kwargs)
+
     @property
     def query(self):
         if not hasattr(self.state, 'pyquery'):
@@ -105,7 +109,7 @@ class RoboBrowserQuery(RoboBrowser):
         """
         Get html content as str
         """
-        return self.browser.response.content.decode(errors="ignore")
+        return self.response.content.decode(errors="ignore")
 
     def take_snapshot(self, file_path):
         """
