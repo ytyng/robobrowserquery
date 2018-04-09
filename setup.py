@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='robobrowserquery',
-    version='0.4',
+    version='0.5',
     description='PyQuery on RoboBrowser',
     license='BSD',
     author='ytyng',

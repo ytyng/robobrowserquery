@@ -63,6 +63,24 @@ class RoboBrowserQuery(RoboBrowser):
         for cookie in cookies:
             self.session.cookies.set_cookie(cookie)
 
+    def get_cookies_as_dicts(self):
+        """
+        Get cookies for debug
+        """
+        return [c.__dict__ for c in iter(self.session.cookies)]
+
+    def get_cookie_values_as_dicts(self):
+        """
+        Get cookies for eazy debug.
+        """
+        return [
+            {
+                "domain": c.domain,
+                "name": c.name,
+                "value": c.value,
+            } for c in iter(self.session.cookies)
+        ]
+
     def open(self, *args, **kwargs):
         if self.simple_cookie:
             kwargs.update({'cookies': self.cookie_as_dict()})
@@ -82,3 +100,16 @@ class RoboBrowserQuery(RoboBrowser):
         # for mac.
         subprocess.Popen(['open', f.name])
         # Auto delete required?
+
+    def get_decoded_content(self):
+        """
+        Get html content as str
+        """
+        return self.browser.response.content.decode(errors="ignore")
+
+    def take_snapshot(self, file_path):
+        """
+        take html snapshot to file
+        """
+        with open(file_path, "wb") as fp:
+            fp.write(self.state.response.content)
