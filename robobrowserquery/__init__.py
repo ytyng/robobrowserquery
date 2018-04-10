@@ -21,6 +21,7 @@ class RoboBrowserQuery(RoboBrowser):
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('parser', 'lxml')
+        self.send_referer = True
         super(RoboBrowserQuery, self).__init__(*args, **kwargs)
 
     @property
@@ -173,3 +174,10 @@ class RoboBrowserQuery(RoboBrowser):
         self.state.parsed = parsed
         if hasattr(self.state, 'pyquery'):
             delattr(self.state, 'pyquery')
+
+    def submit_form(self, form, submit=None, **kwargs):
+        if self.url and self.send_referer:
+            kwargs.setdefault('headers', {})
+            kwargs['headers'].setdefault('Referer', self.url)
+
+        super(RoboBrowserQuery, self).submit_form(form, submit=None, **kwargs)
