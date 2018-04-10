@@ -3,6 +3,9 @@
 
 from __future__ import unicode_literals, print_function
 
+import os
+import re
+
 try:
     from http.cookies import SimpleCookie
 except ImportError:
@@ -75,10 +78,12 @@ class RoboBrowserQuery(RoboBrowser):
         for cookie in cookies:
             self.session.cookies.set_cookie(cookie)
 
-    def load_cookies_from_file(self, file_path):
+    def load_cookies_from_file(self, file_path, fail_silently=True):
         """
         Load unpickled cookies to file
         """
+        if not os.path.exists(file_path) and fail_silently:
+            return
         import pickle
         with open(file_path, 'rb') as fp:
             cookies = pickle.load(fp)
@@ -134,3 +139,37 @@ class RoboBrowserQuery(RoboBrowser):
         """
         with open(file_path, "wb") as fp:
             fp.write(self.state.response.content)
+
+    re_meta_refresh_content_url = re.compile(r'url=(.+)', re.I)
+
+    re_http_equiv_refresh = re.compile("^refresh$", re.I)
+
+    def meta_refresh(self):
+        """
+        Execute meta refresh.
+        """
+        meta_refresh = self.find(
+            'meta', attrs={'http-equiv': self.re_http_equiv_refresh})
+        if not meta_refresh:
+            return
+
+        content = meta_refresh['content']
+        if not content:
+            return
+
+        match = self.re_meta_refresh_content_url.search(content)
+        if not match:
+            return
+
+        self.open(match.group(1))
+
+    def load_html(self, html, **kwargs):
+        """
+        Load html force. Overwrite on current state.
+        """
+        from robobrowser.browser import BeautifulSoup
+        kwargs.setdefault('features', 'lxml')
+        parsed = BeautifulSoup(html, **kwargs)
+        self.state.parsed = parsed
+        if hasattr(self.state, 'pyquery'):
+            delattr(self.state, 'pyquery')

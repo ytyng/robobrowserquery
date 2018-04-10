@@ -57,6 +57,29 @@ class RoboBrowserQueryTest(unittest.TestCase):
 
         self.assertEqual(session_id, cookie_dict_2['PHPSESSID'])
 
+    def test_meta_refresh(self):
+        browser = RoboBrowserQuery()
+        browser.open('http://example.com/')
+        browser.meta_refresh()
+        self.assertEqual(browser.url, 'http://example.com/')
+        browser.load_html("""
+        <html><head>
+        <meta content="0; URL=http://example.com/?refreshed" http-equiv="Refresh"/>
+        </head>
+        </html>
+        """)
+        browser.meta_refresh()
+        self.assertEqual(browser.url, 'http://example.com/?refreshed')
+
+        browser.load_html("""
+        <html><head>
+        <meta content="0; URL=http://example.com/?refreshed2" http-equiv="refresh"/>
+        </head>
+        </html>
+        """)
+        browser.meta_refresh()
+        self.assertEqual(browser.url, 'http://example.com/?refreshed2')
+
 
 if __name__ == "__main__":
     unittest.main()
