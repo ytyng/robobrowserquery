@@ -80,6 +80,21 @@ class RoboBrowserQueryTest(unittest.TestCase):
         browser.meta_refresh()
         self.assertEqual(browser.url, 'http://example.com/?refreshed2')
 
+    def test_parse_url(self):
+        browser = RoboBrowserQuery()
+        browser.open('http://example.com/')
+
+        q = browser.get_parsed_query()
+        self.assertFalse(q)
+
+        browser.open('http://example.com/?a=b&c=d&e[]=f&e[]=g')
+        parsed_query = browser.get_parsed_query()
+
+        self.assertEqual(parsed_query['a'], 'b')
+        self.assertEqual(parsed_query['c'], 'd')
+        self.assertIn("f", parsed_query['e[]'])
+        self.assertIn("g", parsed_query['e[]'])
+
 
 if __name__ == "__main__":
     unittest.main()

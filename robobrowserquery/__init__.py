@@ -14,6 +14,7 @@ except ImportError:
 import pyquery
 
 from robobrowser import RoboBrowser
+from robobrowser.compat import urlparse
 
 
 class RoboBrowserQuery(RoboBrowser):
@@ -181,3 +182,22 @@ class RoboBrowserQuery(RoboBrowser):
             kwargs['headers'].setdefault('Referer', self.url)
 
         super(RoboBrowserQuery, self).submit_form(form, submit=None, **kwargs)
+
+    def get_parsed_url(self):
+        """
+        Get parsed current url.
+        """
+        return urlparse.urlparse(self.url)
+
+    def get_parsed_query(self, flatten=True, *kwargs):
+        """
+        Get parsed current url queries
+        """
+        parsed_url = self.get_parsed_url()
+        qs = urlparse.parse_qs(parsed_url.query, *kwargs)
+        if not flatten:
+            return qs
+        return {
+            k: v if len(v) >= 2 else v[0]
+            for k, v in qs.items()
+        }
