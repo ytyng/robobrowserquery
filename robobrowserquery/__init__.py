@@ -114,14 +114,14 @@ class RoboBrowserQuery(RoboBrowser):
             kwargs.update({'cookies': self.cookie_as_dict()})
         super(RoboBrowserQuery, self).open(*args, **kwargs)
 
-    def preview(self):
+    def preview(self, suffix='.html'):
         """
         Preview latest response with GUI web browser
         """
         import tempfile
         import subprocess
 
-        f = tempfile.NamedTemporaryFile(delete=False)
+        f = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
         f.write(self.state.response.content)
         f.close()
 
