@@ -201,3 +201,19 @@ class RoboBrowserQuery(RoboBrowser):
             k: v if len(v) >= 2 else v[0]
             for k, v in qs.items()
         }
+
+    def reparse(self, decode=True, encoding=None, errors='ignore'):
+        """
+        Retry parse content for beautifulsoup
+        """
+        from bs4 import BeautifulSoup
+        if decode:
+            if encoding:
+                content = self.state.response.content.decode(
+                    encoding, errors=errors)
+            else:
+                content = self.state.response.content.decode(
+                    errors=errors)
+        else:
+            content = self.state.response.content
+        self.state.parsed = BeautifulSoup(content, features=self.parser)
