@@ -1,6 +1,10 @@
 robobrowserquery
 ~~~~~~~~~~~~~~~~
 
+.. image:: https://img.shields.io/pypi/v/robobrowserquery.svg
+    :target: https://pypi.python.org/pypi/robobrowserquery/
+    :alt: Latest PyPI version
+
 PyQuery on RoboBrowser
 
 RoboBrowser: https://github.com/jmcarp/robobrowser

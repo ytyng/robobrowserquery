@@ -181,7 +181,8 @@ class RoboBrowserQuery(RoboBrowser):
             kwargs.setdefault('headers', {})
             kwargs['headers'].setdefault('Referer', self.url)
 
-        super(RoboBrowserQuery, self).submit_form(form, submit=submit, **kwargs)
+        super(RoboBrowserQuery, self).submit_form(
+            form, submit=submit, **kwargs)
 
     def get_parsed_url(self):
         """

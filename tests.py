@@ -95,6 +95,15 @@ class RoboBrowserQueryTest(unittest.TestCase):
         self.assertIn("f", parsed_query['e[]'])
         self.assertIn("g", parsed_query['e[]'])
 
+    def test_reparse(self):
+        browser = RoboBrowserQuery()
+        browser.open('http://example.com/')
+        self.assertTrue(browser.state.parsed.find('title').text)
+        for decode in [True, False]:
+            for encoding in [None, 'utf=8']:
+                browser.reparse(decode=decode, encoding=encoding)
+                self.assertTrue(browser.state.parsed.find('title').text)
+
 
 if __name__ == "__main__":
     unittest.main()
