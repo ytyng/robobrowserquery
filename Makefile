@@ -6,5 +6,8 @@ upload:
 	python setup.py sdist
 	twine upload dist/*
 
+edit:
+	open -a PyCharm .
+
 virtualenv:
 	python3 -m venv venv
