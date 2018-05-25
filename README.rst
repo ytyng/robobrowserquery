@@ -1,6 +1,10 @@
 robobrowserquery
 ~~~~~~~~~~~~~~~~
 
+.. image:: https://secure.travis-ci.org/ytyng/robobrowserquery.svg?branch=master
+    :alt: Build Status
+    :target: http://travis-ci.org/ytyng/robobrowserquery
+
 .. image:: https://img.shields.io/pypi/v/robobrowserquery.svg
     :target: https://pypi.python.org/pypi/robobrowserquery/
     :alt: Latest PyPI version
