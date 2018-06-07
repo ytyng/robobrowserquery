@@ -10,5 +10,5 @@ menu = [
     ('test',
      "./tests.py"),
     ('upload pypi',
-     "./setup.py sdist; twine upload dist/*"),
+     "./setup.py sdist; twine upload --skip-existing dist/*"),
 ]
