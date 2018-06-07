@@ -29,7 +29,7 @@ class RoboBrowserQuery(RoboBrowser):
     def query(self):
         if not hasattr(self.state, 'pyquery'):
             self.state.pyquery = pyquery.PyQuery(
-                self.state.response.content)
+                self.get_decoded_content())
 
         return self.state.pyquery
 
@@ -133,7 +133,12 @@ class RoboBrowserQuery(RoboBrowser):
         """
         Get html content as str
         """
-        return self.response.content.decode(errors="ignore")
+        he = self.header_encoding()
+        if he:
+            return self.response.content.decode(
+                encoding=he, errors="ignore")
+        else:
+            return self.response.content.decode(errors="ignore")
 
     def take_snapshot(self, file_path):
         """
@@ -218,3 +223,21 @@ class RoboBrowserQuery(RoboBrowser):
         else:
             content = self.state.response.content
         self.state.parsed = BeautifulSoup(content, features=self.parser)
+
+    def header_encoding(self):
+        match = re.search(
+            'charset=(.+)',
+            self.response.headers.get('Content-Type', ''),
+            re.IGNORECASE)
+        if match:
+            return match.group(1).lower()
+
+    def find_elements_by_text_match(self, query, needle):
+        """
+        Search elements includes needle text.
+        """
+        elements = self.query(query)
+        for i in range(elements.length):
+            e = elements.eq(i)
+            if needle in e.text():
+                yield e

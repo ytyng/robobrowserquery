@@ -15,7 +15,8 @@ class RoboBrowserQueryTest(unittest.TestCase):
     def test_open(self):
         browser = RoboBrowserQuery()
 
-        browser.open('https://www.mangazenkan.com/?state=robobrowserquery-test')
+        browser.open(
+            'https://www.mangazenkan.com/?state=robobrowserquery-test')
 
         d = browser.get_cookie_values_as_dicts()
         self.assertTrue(isinstance(d, list))
@@ -103,6 +104,13 @@ class RoboBrowserQueryTest(unittest.TestCase):
             for encoding in [None, 'utf=8']:
                 browser.reparse(decode=decode, encoding=encoding)
                 self.assertTrue(browser.state.parsed.find('title').text)
+
+    def test_text_match(self):
+        browser = RoboBrowserQuery()
+        browser.open('http://example.com/')
+        a_list = list(browser.find_elements_by_text_match('a', 'information'))
+        self.assertEqual(len(a_list), 1)
+        self.assertTrue(a_list[0].attr('href'))
 
 
 if __name__ == "__main__":
