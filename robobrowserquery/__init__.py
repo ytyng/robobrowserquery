@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals, print_function
 
+import base64
 import pickle
 import os
 import re
@@ -67,7 +68,8 @@ class RoboBrowserQuery(RoboBrowser):
         return list(iter(self.session.cookies))
 
     def get_serialized_cookies(self):
-        return pickle.dumps(self.get_cookies())
+        b = pickle.dumps(self.get_cookies())
+        return base64.b64encode(b).decode()
 
     def save_cookies_to_file(self, file_path):
         """
@@ -84,7 +86,8 @@ class RoboBrowserQuery(RoboBrowser):
             self.session.cookies.set_cookie(cookie)
 
     def set_serialized_cookies(self, text):
-        cookies = pickle.loads(text)
+        b = base64.b64decode(text)
+        cookies = pickle.loads(b)
         self.set_cookies(cookies)
 
     def load_cookies_from_file(self, file_path, fail_silently=True):
