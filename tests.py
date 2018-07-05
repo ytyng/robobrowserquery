@@ -58,6 +58,28 @@ class RoboBrowserQueryTest(unittest.TestCase):
 
         self.assertEqual(session_id, cookie_dict_2['PHPSESSID'])
 
+    def test_cookie_serialize(self):
+        browser = RoboBrowserQuery()
+
+        browser.open('https://www.mangazenkan.com/mypage/'
+                     '?state=robobrowserquery-test3')
+
+        cookie_dict = {
+            c['name']: c['value'] for c in
+            browser.get_cookie_values_as_dicts()}
+        session_id = cookie_dict['PHPSESSID']
+        cookie_text = browser.get_serialized_cookies()
+        self.assertTrue(cookie_text)
+        browser = RoboBrowserQuery()
+        browser.set_serialized_cookies(cookie_text)
+        browser.open('https://www.mangazenkan.com/mypage/'
+                     '?state=robobrowserquery-test3')
+        cookie_dict_2 = {
+            c['name']: c['value'] for c in
+            browser.get_cookie_values_as_dicts()}
+
+        self.assertEqual(session_id, cookie_dict_2['PHPSESSID'])
+
     def test_meta_refresh(self):
         browser = RoboBrowserQuery()
         browser.open('http://example.com/')
