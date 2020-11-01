@@ -39,46 +39,42 @@ class RoboBrowserQueryTest(unittest.TestCase):
         cookie_file_path = "/tmp/mangazenkan-cookie-test"
         browser = RoboBrowserQuery()
 
-        browser.open('https://www.mangazenkan.com/mypage/'
-                     '?state=robobrowserquery-test2')
+        browser.open('https://www.github.com/')
 
         cookie_dict = {
             c['name']: c['value'] for c in
             browser.get_cookie_values_as_dicts()}
-        session_id = cookie_dict['PHPSESSID']
+        session_id = cookie_dict['_gh_sess']
         browser.save_cookies_to_file(cookie_file_path)
 
         browser = RoboBrowserQuery()
         browser.load_cookies_from_file(cookie_file_path)
-        browser.open('https://www.mangazenkan.com/mypage/'
-                     '?state=robobrowserquery-test2')
+        browser.open('https://www.github.com/')
         cookie_dict_2 = {
             c['name']: c['value'] for c in
             browser.get_cookie_values_as_dicts()}
 
-        self.assertEqual(session_id, cookie_dict_2['PHPSESSID'])
+        self.assertEqual(session_id, cookie_dict_2['_gh_sess'])
 
     def test_cookie_serialize(self):
         browser = RoboBrowserQuery()
 
-        browser.open('https://www.mangazenkan.com/mypage/'
-                     '?state=robobrowserquery-test3')
+        browser.open('https://www.github.com/')
 
         cookie_dict = {
             c['name']: c['value'] for c in
             browser.get_cookie_values_as_dicts()}
-        session_id = cookie_dict['PHPSESSID']
+        session_id = cookie_dict['_gh_sess']
         cookie_text = browser.get_serialized_cookies()
         self.assertTrue(cookie_text)
         browser = RoboBrowserQuery()
         browser.set_serialized_cookies(cookie_text)
-        browser.open('https://www.mangazenkan.com/mypage/'
-                     '?state=robobrowserquery-test3')
+        browser.open('https://www.github.com/')
         cookie_dict_2 = {
             c['name']: c['value'] for c in
             browser.get_cookie_values_as_dicts()}
 
-        self.assertEqual(session_id, cookie_dict_2['PHPSESSID'])
+        self.assertEqual(session_id, cookie_dict_2['_gh_sess'])
 
     def test_meta_refresh(self):
         browser = RoboBrowserQuery()
