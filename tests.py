@@ -28,7 +28,7 @@ class RoboBrowserQueryTest(unittest.TestCase):
 
         self.assertTrue(hasattr(f, 'fields'))
         self.assertTrue(hasattr(f, 'submit_fields'))
-        f['name'].value = 'ONE PIECE'
+        f['q'].value = 'ONE PIECE'
         browser.submit_form(f)
 
         content = browser.get_decoded_content()
