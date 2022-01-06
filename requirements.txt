@@ -1,3 +1,0 @@
-pyquery
-robobrowser
-flake8

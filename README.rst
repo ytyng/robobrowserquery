@@ -9,6 +9,13 @@ robobrowserquery
     :target: https://pypi.python.org/pypi/robobrowserquery/
     :alt: Latest PyPI version
 
+THIS LIBRARY IS DEPRECATED
+==========================
+
+Because RoboBrowser is not active.
+
+----
+
 PyQuery on RoboBrowser
 
 RoboBrowser: https://github.com/jmcarp/robobrowser
