@@ -5,7 +5,7 @@ verify_ssl = true
 
 [scripts]
 test = "./tests.py"
-upload = "./setup.py sdist; twine upload --skip-existing dist/*"
+release = "./setup.py sdist; twine upload --skip-existing dist/*"
 
 [pipenv]
 allow_prereleases = true
