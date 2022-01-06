@@ -13,7 +13,7 @@ setup(
     keywords='RoboBrowser, PyQuery, Browser, Scraping',
     packages=['robobrowserquery'],
     install_requires=[
-      'git+https://github.com/torico-tokyo/robobrowser/', 'pyquery'],
+      'robobrowser @ https://github.com/torico-tokyo/robobrowser/', 'pyquery'],
     entry_points={
     },
 )
