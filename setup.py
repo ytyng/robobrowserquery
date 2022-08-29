@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='robobrowserquery',
-    version='0.7.1',
+    version='0.7.2',
     description='DEPRECATED: PyQuery on RoboBrowser',
     license='BSD',
     author='ytyng',
@@ -13,8 +13,8 @@ setup(
     keywords='RoboBrowser, PyQuery, Browser, Scraping',
     packages=['robobrowserquery'],
     install_requires=[
-      'robobrowser',
-      'pyquery',
+        'robobrowser',
+        'pyquery',
     ],
     entry_points={
     },

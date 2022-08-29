@@ -24,17 +24,6 @@ class RoboBrowserQueryTest(unittest.TestCase):
         d = browser.get_cookies_as_dicts()
         self.assertTrue(isinstance(d, list))
 
-        f = browser.get_form()
-
-        self.assertTrue(hasattr(f, 'fields'))
-        self.assertTrue(hasattr(f, 'submit_fields'))
-        f['q'].value = 'ONE PIECE'
-        browser.submit_form(f)
-
-        content = browser.get_decoded_content()
-
-        self.assertIn("<html", content)
-
     def test_cookie(self):
         cookie_file_path = "/tmp/mangazenkan-cookie-test"
         browser = RoboBrowserQuery()
